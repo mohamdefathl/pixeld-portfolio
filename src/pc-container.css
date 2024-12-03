@@ -1,0 +1,84 @@
+.pc-container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;    
+}
+
+.pc-container-right{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: #1E2B24;
+    padding: 10px;
+    position: relative;
+}
+.pc-container-right-content {
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.pc-container-right-content-children{
+    height: 100%;
+    background-color: rgba(0, 0, 0, .15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5),
+                0 16px 32px rgba(0, 0, 0, 0.3),
+                0 2px 2px 0 rgba(255, 255, 255, .75),
+                inset 0 4px 8px rgba(0, 0, 0, .35);    
+    border-radius: 10px;
+    border: 4px solid rgba(0, 0, 0, 0.25);    
+}
+
+.pc-container-right img{
+    max-width: 100%;
+}
+
+.pc-container-right-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.pc-container-right-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.pc-container-left{
+    background-color: #1E2B24;
+    height: 100vh;
+    min-width: 250px;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Scanlines effect */
+.pc-container-right-effects::before,
+.pc-container-left::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.96; }
+    100% { opacity: 1; }
+}

@@ -6,20 +6,23 @@ interface VolumeKnobProps {
   initialVolume?: number;
 }
 
-export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume = 0 }) => {
+export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume = 50 }) => {
   const [volume, setVolume] = useState(initialVolume);
   const knobRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);  
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = initialVolume / 100;
+    }
+    // Set initial rotation to match middle volume
+    if (knobRef.current) {
+      const rotation = (initialVolume * 270) / 100;
+      knobRef.current.style.transform = `rotate(${rotation}deg)`;
+    }
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
-    if (audioRef.current?.paused) {
-      const promise = audioRef.current.play();
-      if (promise !== undefined) {
-        promise.catch((error) => {
-          console.error("Audio playback failed:", error);
-        });
-      }
-    }
     setIsDragging(true);
   };
 
@@ -46,10 +49,10 @@ export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume 
     if (angle >= 0 && angle <= 270) {
       const volumeValue = Math.floor(angle / (270 / 100));
       setVolume(volumeValue);
-      
+
       if (audioRef.current) {
         audioRef.current.volume = volumeValue / 100;
-      }      
+      }
     }
   };
 
@@ -69,22 +72,29 @@ export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume 
     };
   }, [isDragging]);
 
-  const startingTickAngle = -135;
 
   return (
-    <div className="volume-knob-container">      
-      <div className="knob-surround">
-        <div
-          ref={knobRef}
-          className="knob"
-          style={{ transform: `rotate(${(volume * 270) / 100}deg)` }}
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleMouseDown}
-        />
+    <div className="volume-knob-main-container">
+      <div className="volume-knob-container">
+        <div className="knob-surround">
+          <div className="knob-top">
+            <div
+              ref={knobRef}
+              className="knob"
+              style={{ transform: `rotate(${(volume * 270) / 100}deg)` }}
+              onMouseDown={handleMouseDown}
+              onTouchStart={handleMouseDown}
+            />
+          </div>
+          <div className="knob-bottom"></div>
+          <div className="knob-base"></div>
+        </div>
+      </div>
+      <div className="volume-labels">
         <span className="min">Min</span>
-        <span className="max">Max</span>        
+        <span className="max">Max</span>
       </div>
     </div>
-    
+
   );
 };

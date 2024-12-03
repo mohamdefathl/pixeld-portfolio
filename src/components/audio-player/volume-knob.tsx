@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './VolumeKnob.css';
+import './volume-knob.css';
 
 interface VolumeKnobProps {
   audioRef: React.RefObject<HTMLAudioElement>;
@@ -9,26 +9,7 @@ interface VolumeKnobProps {
 export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume = 0 }) => {
   const [volume, setVolume] = useState(initialVolume);
   const knobRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [tickHighlight, setTickHighlight] = useState(0);
-
-  const createTicks = (numTicks: number, highlightNumTicks: number) => {
-    const ticks = [];
-    const degreeIncrement = 270 / (numTicks - 1);
-
-    for (let i = 0; i < numTicks; i++) {
-      const rotateDegrees = startingTickAngle + degreeIncrement * i;
-      const isHighlighted = i <= highlightNumTicks;
-      ticks.push(
-        <div
-          key={i}
-          className={`tick ${isHighlighted ? 'highlighted' : ''}`}
-          style={{ transform: `rotate(${rotateDegrees}deg)` }}
-        />
-      );
-    }
-    return ticks;
-  };
+  const [isDragging, setIsDragging] = useState(false);  
 
   const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
     if (audioRef.current?.paused) {
@@ -68,10 +49,7 @@ export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume 
       
       if (audioRef.current) {
         audioRef.current.volume = volumeValue / 100;
-      }
-
-      const tickHighlightPosition = Math.round((volumeValue * 2.7) / 10);
-      setTickHighlight(tickHighlightPosition);
+      }      
     }
   };
 
@@ -104,10 +82,7 @@ export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume 
           onTouchStart={handleMouseDown}
         />
         <span className="min">Min</span>
-        <span className="max">Max</span>
-        <div className="ticks">
-          {createTicks(27, tickHighlight)}
-        </div>
+        <span className="max">Max</span>        
       </div>
     </div>
     

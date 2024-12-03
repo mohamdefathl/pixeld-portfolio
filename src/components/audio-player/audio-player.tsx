@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './audio-player.css';
-import { VolumeKnob } from './VolumeKnob';
+import { VolumeKnob } from './volume-knob';
 import buttonClickSound from '../../assets/button_click.mp3';
 import backgroundMusic from '../../assets/song.mp3';
 

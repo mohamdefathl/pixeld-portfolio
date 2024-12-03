@@ -1,12 +1,12 @@
 import React from 'react'
-import './pc-container.css'
-import frame from './assets/frame.svg'
-import { AudioPlayer } from './components/audio-player/audio-player'
+import './tv-container.css'
+import frame from '../../assets/frame.svg'
+import { AudioPlayer } from '../audio-player/audio-player'
 
 interface Props {
     children: React.ReactNode
 }
-export const PcContainer: React.FC<Props> = ({ children }) => {
+export const TvContainer: React.FC<Props> = ({ children }) => {
     return (
         <div className='pc-container'>
             <div className='pc-container-right'>

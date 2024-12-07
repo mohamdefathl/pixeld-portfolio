@@ -1,0 +1,25 @@
+.contact-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+.contact-personal{
+    width: 48%;
+    height: 80%;
+    border:1px solid var(--main-green);    
+    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+}
+.contact-title{
+    text-align: center; 
+    border-bottom: 1px solid var(--main-green);    
+    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+}
+    
+
+.contact-contact{
+    width: 48%;
+    height: 80%;
+    border:1px solid var(--main-green);
+    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+}

@@ -3,8 +3,10 @@ import './audio-player.css';
 import { VolumeKnob } from './volume-knob';
 import buttonClickSound from '../../assets/button_click.mp3';
 import backgroundMusic from '../../assets/song.mp3';
-
-export const AudioPlayer: React.FC = () => {
+interface Props {
+  children: React.ReactNode;
+}
+export const AudioPlayer: React.FC<Props> = ({children}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(new Audio(backgroundMusic));
   const buttonSoundRef = useRef(new Audio(buttonClickSound));
@@ -63,6 +65,7 @@ export const AudioPlayer: React.FC = () => {
           <div className="button-14-bottom"></div>
           <div className="button-14-base"></div>
         </button>
+        {children}
       </div>
       <VolumeKnob audioRef={audioRef} initialVolume={50} />
     </div>

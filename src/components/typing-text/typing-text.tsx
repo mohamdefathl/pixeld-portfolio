@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import './typing-text.css';
 
 interface TypingAnimationProps {
   text: string;
   duration?: number;
   className?: string;
+  style?: CSSProperties;
 }
 
 export function TypingAnimation({
   text,
-  duration = 200,
+  duration = 150,
   className,
+  style,
 }: TypingAnimationProps) {
   const [displayedText, setDisplayedText] = useState<string>("");
   const [i, setI] = useState<number>(0);
@@ -31,8 +33,8 @@ export function TypingAnimation({
   }, [duration, i, text]);
 
   return (
-    <q className={`typing-text welcome ${className || ''}`}>
+    <span className={`typing-text ${className || ''}`} style={style}>
       {displayedText ? displayedText : text}
-    </q>
+    </span>
   );
 }

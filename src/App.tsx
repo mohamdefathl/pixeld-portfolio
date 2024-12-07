@@ -26,8 +26,11 @@ function AppContent() {
 }
 
 function App() {
+  // Use basename only in production (GitHub Pages)
+  const basename = import.meta.env.DEV ? '' : '/pixle-portfolio';
+  
   return (    
-      <BrowserRouter basename="/pixle-portfolio">
+      <BrowserRouter basename={basename}>
         <AppContent />        
       </BrowserRouter>
   );

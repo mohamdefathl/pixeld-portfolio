@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import './App.css';
-import { TypingAnimation } from './components/typing-text/typing-text';
+import './global.css';
 import { TvContainer } from './components/tv-container/tv-container';
 import { Home } from './screens/home/home';
 import { Experience } from './screens/experience/experience';

@@ -22,7 +22,7 @@ export const VolumeKnob: React.FC<VolumeKnobProps> = ({ audioRef, initialVolume 
     }
   }, []);
 
-  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+  const handleMouseDown = () => {
     setIsDragging(true);
   };
 

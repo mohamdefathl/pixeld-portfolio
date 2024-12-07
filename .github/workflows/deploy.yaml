@@ -1,0 +1,36 @@
+name: build and deploy
+on:
+  push:
+    branches:
+      - master
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20.18.0
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+          
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
+          branch: gh-pages
+          clean: true # Automatically remove deleted files from the deployment

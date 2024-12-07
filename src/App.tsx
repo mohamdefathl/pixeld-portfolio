@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './global.css';
 import { TvContainer } from './components/tv-container/tv-container';
 import { Home } from './screens/home/home';
@@ -27,9 +27,8 @@ function AppContent() {
 
 function App() {
   return (    
-      <BrowserRouter basename="/pixle-portfolio/">
-        <AppContent />        
-      </BrowserRouter>
+    <AppContent />        
+    
   );
 }
 

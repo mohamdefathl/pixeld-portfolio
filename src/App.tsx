@@ -27,7 +27,7 @@ function AppContent() {
 
 function App() {
   return (    
-      <BrowserRouter basename="/pixle-portfolio">
+      <BrowserRouter basename="/pixle-portfolio/">
         <AppContent />        
       </BrowserRouter>
   );

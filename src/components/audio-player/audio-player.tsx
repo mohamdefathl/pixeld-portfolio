@@ -1,72 +1,122 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './audio-player.css';
 import { VolumeKnob } from './volume-knob';
+import { AudioVisualizer } from './audio-visualizer';
+import { AudioContextManager } from './audio-context-manager';
 import buttonClickSound from '../../assets/button_click.mp3';
 import backgroundMusic from '../../assets/song.mp3';
+import song2 from '../../assets/song2.mp3';
+import { Button } from '../button/button';
+
 interface Props {
   children: React.ReactNode;
 }
-export const AudioPlayer: React.FC<Props> = ({children}) => {
+
+const songs = [
+  { id: 1, title: "I don't want to set the world on fire", src: backgroundMusic },
+  { id: 2, title: 'Into Each Life Some Rain Must Fall', src: song2 },
+];
+
+export const AudioPlayer: React.FC<Props> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(new Audio(backgroundMusic));
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(songs[currentSongIndex].src));
   const buttonSoundRef = useRef(new Audio(buttonClickSound));
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const audioContextManagerRef = useRef<AudioContextManager | null>(null);
+  const visualizerRef = useRef<AudioVisualizer | null>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    audioContextManagerRef.current = new AudioContextManager(audioRef.current);
+    visualizerRef.current = new AudioVisualizer(
+      canvasRef.current,
+      audioContextManagerRef.current.getAnalyzer()
+    );
+
+    return () => {
+      visualizerRef.current?.stop();
+      audioContextManagerRef.current?.cleanup();
+    };
+  }, []);
 
   const playAudio = async () => {
     try {
+      await audioContextManagerRef.current?.resume();
       await buttonSoundRef.current.play();
       await new Promise(resolve => setTimeout(resolve, 200));
       await audioRef.current.play();
       setIsPlaying(true);
+      visualizerRef.current?.start();
     } catch (error) {
       console.error('Error playing audio:', error);
     }
   };
 
   const pauseAudio = async () => {
-
     try {
       await buttonSoundRef.current.play();
       await new Promise(resolve => setTimeout(resolve, 200));
       audioRef.current.pause();
       setIsPlaying(false);
+      visualizerRef.current?.stop();
     } catch (error) {
       console.error('Error pausing audio:', error);
     }
   };
 
+  const changeSong = async (index: number) => {
+    const wasPlaying = isPlaying;
+    if (isPlaying) {
+      await pauseAudio();
+    }
+    setCurrentSongIndex(index);
+    audioRef.current.src = songs[index].src;
+    if (wasPlaying) {
+      await playAudio();
+    }
+  };
+
   return (
     <div className="audio-player">
+      <div className="song-list">
+        {songs.map((song, index) => (
+          <>
+            <div key={song.id}
+              onClick={() => changeSong(index)}>
+              {song.title}
+            </div>
+          </>
+        ))}
+      </div>
       <div className="audio-player-buttons">
-        <button
-          className="button-14"
-          role="button"
-          onClick={playAudio}
-          disabled={isPlaying}
-        >
-          <div className="button-14-top text">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-          <div className="button-14-bottom"></div>
-          <div className="button-14-base"></div>
-        </button>
-        <button
-          className="button-14"
-          role="button"
-          onClick={pauseAudio}
-          disabled={!isPlaying}
-        >
-          <div className="button-14-top text">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
-            </svg>
-          </div>
-          <div className="button-14-bottom"></div>
-          <div className="button-14-base"></div>
-        </button>
+        <Button onClick={playAudio} disabled={isPlaying}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </Button>
+        <Button onClick={pauseAudio} disabled={!isPlaying}>
+
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
+          </svg>
+        </Button>
+
         {children}
       </div>
+      <canvas
+        ref={canvasRef}
+        width="600"
+        height="200"
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'black',
+          marginBottom: '20px',
+          borderRadius: '8px',
+        }}
+      />
       <VolumeKnob audioRef={audioRef} initialVolume={50} />
     </div>
   );

@@ -9,7 +9,7 @@ import { Contact } from './screens/contact/contact';
 
 function AppContent() {        
   return (
-    <div className="App">
+    <div className="App scroll">
       <TvContainer>
         <section>
           <Routes>

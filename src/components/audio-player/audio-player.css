@@ -13,3 +13,27 @@
   gap: 1rem;  
 }
 
+.song-list-container{
+  width: 100%;
+  border-radius: 2px;
+  background-color: #131;
+  background-image: radial-gradient(ellipse 500% 100% at 50% 90%, transparent, #121);
+  background-position: center;  
+  padding: 0.4rem 1rem;  
+  color: rgba(128, 255, 128, 0.8);  
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5), 0 16px 32px rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(255, 255, 255, .75), inset 0 4px 8px rgba(0, 0, 0, .35);
+  border: 4px solid rgba(0, 0, 0, 0.25);
+}
+.song-list-container > q {
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.song-list-container > q:not(:last-child) {
+  margin-bottom: 0.8rem;
+}
+
+.song-list-container > q:not(.selected) {
+  color: #126B12;
+  text-shadow: unset;
+  font-weight: bold;
+}

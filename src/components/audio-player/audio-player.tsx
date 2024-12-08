@@ -6,6 +6,7 @@ import { AudioContextManager } from './audio-context-manager';
 import buttonClickSound from '../../assets/button_click.mp3';
 import backgroundMusic from '../../assets/song.mp3';
 import song2 from '../../assets/song2.mp3';
+import song3 from '../../assets/song3.mp3';
 import { Button } from '../button/button';
 
 interface Props {
@@ -13,8 +14,9 @@ interface Props {
 }
 
 const songs = [
-  { id: 1, title: "I don't want to set the world on fire", src: backgroundMusic },
+  { id: 1, title: "I Don't Want To Set The World On Fire", src: backgroundMusic },
   { id: 2, title: 'Into Each Life Some Rain Must Fall', src: song2 },
+  { id: 3, title: 'We Three', src: song3 },
 ];
 
 export const AudioPlayer: React.FC<Props> = ({ children }) => {
@@ -80,14 +82,12 @@ export const AudioPlayer: React.FC<Props> = ({ children }) => {
 
   return (
     <div className="audio-player">
-      <div className="song-list">
+      <div className="song-list-container">
         {songs.map((song, index) => (
-          <>
-            <div key={song.id}
-              onClick={() => changeSong(index)}>
-              {song.title}
-            </div>
-          </>
+          <q key={song.id} onClick={() => changeSong(index)}
+            className={`text-q text-q-content ${currentSongIndex === index ? 'selected' : ''}`}>
+            {song.title}
+          </q>
         ))}
       </div>
       <div className="audio-player-buttons">

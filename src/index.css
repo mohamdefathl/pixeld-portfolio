@@ -2,16 +2,23 @@
 
 
 :root {
-  font-family: "VT323", monospace;
-  font-weight: 400;
   --main-green: #7aff60;
-  --dark-green: #18580b;  
-  /* scrollbar-color: var(--main-green) var(--dark-green);
-  scrollbar-width: thin; */
+  --dark-green: #126B12;    
+  --display-height: 100vh;
+  --blink-time: 500ms;
+  scrollbar-color: var(--main-green) var(--dark-green);
+  scrollbar-width: thin;  
   /* font-size: clamp(18px, 3vw, 30px); */
 }
 
-h1, h2, h3, h4, h5, h6 {
+.scroll{
+  scrollbar-color: var(--main-green) var(--dark-green);
+  scrollbar-width: thin;  
+}
+* {
+  font-family: "VT323", monospace;  
   font-weight: 400;
   margin: 0px;
+  box-sizing: border-box;
 }
+

@@ -14,12 +14,87 @@
     text-align: center; 
     border-bottom: 1px solid var(--main-green);    
     box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+    padding: 1rem 0px;
 }
-    
+.personal-info {
+  white-space: pre-line;
+  line-height: 2;  
+  padding: 1rem 0.5rem;
+}
+.personal-info > span {
+    font-size: 1.75rem;
+}
 
 .contact-contact{
+    position: relative;
     width: 48%;
     height: 80%;
     border:1px solid var(--main-green);
     box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+}
+
+.contact-form {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    /* flex-direction: column; */
+}
+
+.form-label{
+    text-shadow: 0 0 0.5ex #3f3, 0 0 1px rgba(255,255,255,0.5);
+    font-size: 1.75rem;
+}
+.form-label.empty {
+    color: var(--dark-green);
+    text-shadow: none;
+}
+
+.form-label.filled {
+    font-size: 1.75rem;
+}
+.form-input:placeholder-shown{
+    text-shadow: none;
+}
+.form-input {
+    width: 100%;
+    font-size: 1.75rem;
+    background: transparent;
+    border:none;
+    color: var(--main-green);
+    outline: none;
+    transition: all 0.3s ease;
+    caret-color: var(--main-green);    
+    text-shadow: 0 0 0.5ex #3f3, 0 0 1px rgba(255,255,255,0.5);
+}
+
+.form-input::placeholder {
+    color: var(--dark-green);
+}
+
+.message-input {    
+    resize: none;
+}
+
+.submit-button {
+    background: transparent;
+    border: 1px solid var(--main-green);
+    color: var(--main-green);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-start;
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+    box-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);    
+}
+
+.submit-button:hover {
+    background: var(--main-green);
+    color: black;
 }

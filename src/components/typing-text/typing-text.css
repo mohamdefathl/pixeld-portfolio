@@ -1,12 +1,11 @@
-.typing-text {
-  font-family: inherit;
+.typing-text {  
   text-align: center;
   font-size: 2.25rem;
   filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1));
   border-right: 10px solid currentColor;
   animation: blink-cursor 0.75s step-end infinite;  
   color: #3f3;  
-  text-shadow: 0 0 1ex #3f3, 0 0 2px rgba(255,255,255,0.8);
+  text-shadow: 0 0 0.5ex #3f3, 0 0 1px rgba(255,255,255,0.5);
 }
 
 @keyframes blink-cursor {

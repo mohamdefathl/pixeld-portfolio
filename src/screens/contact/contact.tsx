@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './contact.css';
 import { TypingAnimation } from '../../components/typing-text/typing-text';
+import { useFirstVisit } from '../../hooks/useFirstVisit';
 
 export const Contact: React.FC = () => {
+  const isFirstVisit = useFirstVisit('contact');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -33,7 +35,7 @@ export const Contact: React.FC = () => {
       <div className='contact-personal'>
         <h2 className='text-q contact-title'>Personal Information</h2>
         <div className='personal-info'>
-          <TypingAnimation text={personalInfo} duration={30} />
+          <TypingAnimation text={personalInfo} duration={30} animate={isFirstVisit} />
         </div>
       </div>
       <div className='contact-contact'>

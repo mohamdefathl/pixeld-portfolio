@@ -1,36 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TypingAnimation } from '../../components/typing-text/typing-text';
+import { useFirstVisit } from '../../hooks/useFirstVisit';
+
 interface Section {
   name: string;
   route: string;
 }
+
 export const Home: React.FC = () => {
   const navigate = useNavigate();
+  const isFirstVisit = useFirstVisit('home');
   const [sections] = useState<Section[]>([
     { name: 'Experience', route: 'experience' },
+    { name: 'Skills', route: 'skills' },
     { name: 'Learning & Training', route: 'learning-training' },
     { name: 'Certifications & Projects', route: 'certifications-projects' },
     { name: 'Contact', route: 'contact' }
   ]);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const [introComplete, setIntroComplete] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (introComplete) {
+      setCurrentIndex(0);
+    }
+  }, [introComplete]);
 
   const handleSectionClick = (route: string) => {
-
     navigate(`/${route}`);
+  };
+
+  const handleTypingComplete = () => {
+    if (currentIndex < sections.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+    }
   };
 
   return (
     <div className="home-container">
-      <TypingAnimation duration={70} text='Hey, I am Mohammed Al-ghorbani, a fanatical software developer.' />      
+      <TypingAnimation 
+        duration={40} 
+        text='Hey, I am Mohammed Al-ghorbani, a obsessive software developer.'
+        onComplete={() => setIntroComplete(true)}
+        style={{ fontSize: '2.25rem' }}
+        animate={isFirstVisit}
+      />      
       <div style={{ marginTop: '5rem' }}>
         {sections.map((message:Section, index:number) => (
           <q
             key={index}
             onClick={() => handleSectionClick(message.route)}
-            className="text-q "
-            style={{ cursor: 'pointer', maxWidth: '300px', fontSize: '1.5rem', marginBottom: '1.6rem' }}
+            className="text-q text-q-content"
+            style={{ 
+              cursor: 'pointer', 
+              maxWidth: '300px', 
+              fontSize: '1.5rem', 
+              marginBottom: '1.6rem',
+              display: 'block',
+              opacity: index <= currentIndex ? 1 : 0
+            }}
           >
-            {message.name}
+            {index === currentIndex ? (
+              <TypingAnimation 
+                duration={20} 
+                text={message.name} 
+                onComplete={handleTypingComplete}
+                style={{ fontSize: 'inherit' }}
+                animate={isFirstVisit}
+              />
+            ) : index < currentIndex ? (
+              message.name
+            ) : null}
           </q>
         ))}
       </div>
